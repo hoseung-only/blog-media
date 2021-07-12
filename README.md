@@ -1,6 +1,5 @@
-# [service-name]
-
-## Test
+# blog-media
+media service for my personal blog
 
 ## References
 
