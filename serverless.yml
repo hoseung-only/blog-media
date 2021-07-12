@@ -1,4 +1,4 @@
-service: service-name
+service: blog-media
 
 provider:
   name: aws
