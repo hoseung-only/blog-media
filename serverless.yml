@@ -5,7 +5,13 @@ provider:
   runtime: nodejs12.x
   region: ap-northeast-2
   stage: prod
+  environmnets: ${file(./env/env.yml)}
   lambdaHashingVersion: 20201221
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "*"
 
 plugins:
   - serverless-plugin-typescript
@@ -14,3 +20,24 @@ functions:
   api:
     handler: src/index.handler
     timeout: 10
+
+resources:
+  Resources:
+    Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: blog-media
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - POST
+              AllowedOrigins:
+                - "*"
