@@ -28,7 +28,7 @@ resources:
     Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: blog-media
+        BucketName: blog-media-upload
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
