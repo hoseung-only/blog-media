@@ -11,7 +11,7 @@ export class PresignedPostGenerator {
   public async generate() {
     return await createPresignedPost(this.client, {
       Bucket: process.env.BUCKET!,
-      Key: this.fileName,
+      Key: `${this.fileName}.${this.fileType}`,
       Expires: 120,
       Fields: {
         "Content-Type": `image/${this.fileType}`,
