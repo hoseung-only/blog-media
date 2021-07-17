@@ -5,13 +5,15 @@ provider:
   runtime: nodejs12.x
   region: ap-northeast-2
   stage: prod
-  environmnets: ${file(./env/env.yml)}
+  environment: ${file(./env/env.yml)}
   lambdaHashingVersion: 20201221
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:*"
-      Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:*"
+          Resource: "*"
 
 plugins:
   - serverless-plugin-typescript
