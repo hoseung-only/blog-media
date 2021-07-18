@@ -14,9 +14,13 @@ export class PresignedPostGenerator {
       Key: `${this.fileName}.${this.fileType}`,
       Expires: 120,
       Fields: {
+        Key: `${this.fileName}.${this.fileType}`,
         "Content-Type": `image/${this.fileType}`,
       },
-      Conditions: [["starts-with", "Content-Type", "image/"]],
+      Conditions: [
+        ["eq", "Key", `${this.fileName}.${this.fileType}`],
+        ["starts-with", "Content-Type", "image/"],
+      ],
     });
   }
 }
