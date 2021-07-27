@@ -6,7 +6,7 @@
     "deploy": "serverless deploy",
     "remove": "serverless remove",
     "format": "prettier --write 'src/**/*.ts'",
-    "test": "BUCKET=bucket REGION=ap-northeast-2 mocha --require ts-node/register --exit -t 5000 src/**/__test__/*.spec.ts",
+    "test": "AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test BUCKET=bucket REGION=ap-northeast-2 mocha --require ts-node/register --exit -t 5000 src/**/__test__/*.spec.ts",
     "coverage": "nyc --exclude='src/**/__test__' npm run test",
     "coverage:summary": "nyc --exclude='src/**/__test__' --reporter=text-summary npm run test"
   },
