@@ -5,7 +5,9 @@ provider:
   runtime: nodejs12.x
   region: ap-northeast-2
   stage: prod
-  environment: ${file(./env/env.yml)}
+  environment:
+    REGION: ${env:REGION, self:provider.region}
+    BUCKET: ${env:BUCKET, self:resources.Resources.Bucket.Properties.BucketName}
   lambdaHashingVersion: 20201221
   iam:
     role:
