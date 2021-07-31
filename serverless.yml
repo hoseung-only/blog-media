@@ -54,8 +54,8 @@ resources:
       Properties:
         DistributionConfig:
           Origins:
-            Id: blog-media-origin
-            DomainName: blog-media-upload.s3.ap-northeast-2.amazonaws.com
+            - Id: blog-media-origin
+              DomainName: blog-media-upload.s3.ap-northeast-2.amazonaws.com
           DefaultCacheBehavior:
             TargetOriginId: blog-media-origin
             ViewerProtocolPolicy: https-only
