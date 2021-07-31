@@ -6,8 +6,8 @@ provider:
   region: ap-northeast-2
   stage: prod
   environment:
-    REGION: ${env:REGION, self:provider.region}
-    BUCKET: ${env:BUCKET, self:resources.Resources.Bucket.Properties.BucketName}
+    REGION: ${env:REGION, ap-northeast-2}
+    BUCKET: ${env:BUCKET, blog-media-upload}
   lambdaHashingVersion: 20201221
   iam:
     role:
@@ -49,3 +49,19 @@ resources:
                 - POST
               AllowedOrigins:
                 - "*"
+    CloudFront:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Origins:
+            Id: blog-media-origin
+            DomainName: blog-media-upload.s3.ap-northeast-2.amazonaws.com
+          DefaultCacheBehavior:
+            TargetOriginId: blog-media-origin
+            ViewerProtocolPolicy: https-only
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Aliases:
+            - blog-media.hoseung.me
+          ViewerCertificate:
+            AcmCertificateArn: 	arn:aws:acm:ap-northeast-2:103085914365:certificate/4149c51d-7066-4c82-8aef-a3b44d195297
+          Enabled: true
