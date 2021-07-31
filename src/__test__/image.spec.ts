@@ -8,7 +8,7 @@ describe("Image Routers", () => {
     context("When user requests", () => {
       it("should return presigned post", async () => {
         return request(app)
-          .get("/image/presigned_post")
+          .get("/images/presigned_post")
           .query({ fileName: "image", fileType: "png" })
           .expect(200)
           .then((response) => {
