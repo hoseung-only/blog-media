@@ -6,8 +6,8 @@ provider:
   region: ap-northeast-2
   stage: prod
   environment:
-    REGION: ${env:REGION, ap-northeast-2}
-    BUCKET: ${env:BUCKET, blog-media-upload}
+    REGION: ap-northeast-2
+    BUCKET: blog-media-upload
   lambdaHashingVersion: 20201221
   iam:
     role:
