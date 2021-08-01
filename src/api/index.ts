@@ -1,12 +1,12 @@
 import { Router } from "express";
 
-import { applyImageRouters } from "./routers/image";
+import { applyPostImageRouters } from "./routers/post";
 import { applyErrorHandlers } from "./errorHandlers";
 
 export const getRootRouter = () => {
   const router = Router();
 
-  applyImageRouters(router);
+  applyPostImageRouters(router);
   applyErrorHandlers(router);
 
   return router;

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { query } from "express-validator";
+import { param, query } from "express-validator";
 
 import { validateParameters } from "../middlewares/validateParameters";
 
@@ -7,20 +7,24 @@ import * as Presenters from "../presenters";
 
 import { PresignedPostGenerator } from "../services/presignedPostGenerator";
 
-export const applyImageRouters = (rootRouter: Router) => {
+export const applyPostImageRouters = (rootRouter: Router) => {
   const router = Router();
 
   router.get(
-    "/presigned_post",
+    "/:id/images/presigned_post",
+    param("id").isString().exists(),
     query("fileName").isString().exists(),
     query("fileType").isString().exists(),
     validateParameters,
     async (req, res, next) => {
       try {
+        const postId = req.params.id as string;
         const fileName = req.query.fileName as string;
         const fileType = req.query.fileType as string;
 
-        const presignedPost = await new PresignedPostGenerator(fileName, fileType).generate();
+        const key = `/posts/${postId}/${fileName}.${fileType}`;
+
+        const presignedPost = await new PresignedPostGenerator(key).generate();
 
         return res.status(200).json(Presenters.presentPresignedPost(presignedPost));
       } catch (error) {
@@ -29,5 +33,5 @@ export const applyImageRouters = (rootRouter: Router) => {
     }
   );
 
-  rootRouter.use("/images", router);
+  rootRouter.use("/posts", router);
 };
