@@ -45,6 +45,11 @@ resources:
                 - POST
               AllowedOrigins:
                 - "*"
+    AccessIdentity:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties: 
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: access identity to provide s3 content via cloudfront
     CloudFront:
       Type: AWS::CloudFront::Distribution
       Properties:
@@ -52,6 +57,12 @@ resources:
           Origins:
             - Id: blog-media-origin
               DomainName: blog-media-upload.s3.ap-northeast-2.amazonaws.com
+              S3OriginConfig:
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - ""
+                    - - "origin-access-identity/cloudfront/"
+                      - Ref: AccessIdentity
           DefaultCacheBehavior:
             TargetOriginId: blog-media-origin
             ViewerProtocolPolicy: https-only
@@ -59,7 +70,7 @@ resources:
           Aliases:
             - blog-media.hoseung.me
           ViewerCertificate:
-            AcmCertificateArn: 	arn:aws:acm:ap-northeast-2:103085914365:certificate/4149c51d-7066-4c82-8aef-a3b44d195297
+            AcmCertificateArn: arn:aws:acm:us-east-1:103085914365:certificate/a7b3ee39-01ec-41b0-8234-b1501e6e2d3f
             MinimumProtocolVersion: TLSv1
             SslSupportMethod: sni-only
           Enabled: true
