@@ -4,19 +4,23 @@ import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 export class PresignedPostGenerator {
   private client: S3Client;
 
-  constructor(private key: string) {
+  constructor(private fileName: string, private fileType: string) {
     this.client = new S3Client({ region: process.env.REGION! });
   }
 
   public async generate() {
     return await createPresignedPost(this.client, {
       Bucket: process.env.BUCKET!,
-      Key: this.key,
+      Key: `${this.fileName}.${this.fileType}`,
       Expires: 120,
       Fields: {
-        key: this.key,
+        key: `${this.fileName}.${this.fileType}`,
+        "Content-Type": `image/${this.fileType}`,
       },
-      Conditions: [["eq", "$key", this.key]],
+      Conditions: [
+        ["eq", "$key", `${this.fileName}.${this.fileType}`],
+        ["starts-with", "$Content-Type", "image/"],
+      ],
     });
   }
 }
