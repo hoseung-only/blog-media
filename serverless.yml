@@ -71,6 +71,6 @@ resources:
             - blog-media.hoseung.me
           ViewerCertificate:
             AcmCertificateArn: arn:aws:acm:us-east-1:103085914365:certificate/a7b3ee39-01ec-41b0-8234-b1501e6e2d3f
-            MinimumProtocolVersion: TLSv1
+            MinimumProtocolVersion: TLSv1.2_2021
             SslSupportMethod: sni-only
           Enabled: true
